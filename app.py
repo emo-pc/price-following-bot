@@ -44,7 +44,7 @@ df=db.get_all_products()
 if not df.empty:
     df_show=df.drop(columns=["id"])
 
-    df_show.columns=["product name","url","target price","current price"]
+    df_show.columns=["product_name","url","target_price","current_price"]
     st.dataframe(df_show,use_container_width=True,hide_index=True)
 else:
     st.info("No product in track")
