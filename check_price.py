@@ -5,6 +5,7 @@ from email.mime.multipart import MIMEMultipart
 import database as db
 from scraper import get_data
 import time
+import schedule
 
 #write the email address of the bot
 e_mail=""
@@ -78,4 +79,11 @@ def check_prices():
         print("-"*40)
     print("\n completed")
 if __name__=="__main__":
+    print("bot is set")
     check_prices()
+    schedule.every().day.at("10.00").do(check_prices())
+    schedule.every().day.at("20.00").do(check_prices())
+
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
