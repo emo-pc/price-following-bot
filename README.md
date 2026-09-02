@@ -1,37 +1,83 @@
-# 🛒 Amazon Fiyat Takip ve Bildirim Asistanı (Amazon Price Tracker)
+# 🛒 Amazon Price Tracker & Notifier Bot
 
-Bu proje; **Python**, **Streamlit**, **Selenium** ve **SQLite** teknolojileri kullanılarak geliştirilmiş, e-ticaret sitelerindeki ürün fiyatlarını otomatik olarak takip eden ve hedef fiyata ulaşıldığında kullanıcıya anında e-posta bildirimi gönderen uçtan uca (end-to-end) bir otomasyon uygulamasıdır.
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-UI-FF4B4B.svg)
+![Selenium](https://img.shields.io/badge/Selenium-Scraping-43B02A.svg)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57.svg)
 
----
-
-## ✨ Temel Özellikler
-
-* **Modern Web Arayüzü (Streamlit):** Kullanıcı dostu arayüz üzerinden kolayca yeni ürün ekleme, hedef fiyat belirleme ve takip edilen ürünleri tablo halinde görüntüleme.
-* **Güçlü Veri Kazıma (Selenium & BeautifulSoup):** Amazon'un gelişmiş bot korumalarını ve güvenlik duvarlarını aşarak ürün başlıklarını ve güncel fiyatları hatasız çekme.
-* **Kalıcı Veri Yönetimi (SQLite):** Eklenen ürünlerin, URL'lerin, hedef fiyatların ve güncel fiyatların yerel bir veritabanında güvenle saklanması.
-* **Akıllı E-Posta Bildirim Sistemi (`smtplib`):** Ürün fiyatı belirlenen hedef fiyatın altına düştüğünde veya eşitlendiğinde otomatik olarak e-posta gönderimi.
-* **Otomasyon Desteği (`schedule`):** Arka planda periyodik olarak çalışan kontrol mekanizması ile fiyatları sürekli denetleme imkanı.
+Bu proje; Amazon üzerindeki ürünlerin güncel fiyatlarını otomatik olarak takip eden, kullanıcı dostu bir web arayüzüne sahip ve belirlenen hedef fiyata ulaşıldığında anında e-posta ile bildirim gönderen **uçtan uca (end-to-end) bir web scraping ve otomasyon** uygulamasıdır.
 
 ---
 
-## 🛠️ Kullanılan Teknolojiler ve Kütüphaneler
+## 🚀 Kurulum ve Çalıştırma Rehberi (Adım Adım)
 
-* **Python 3.x**
-* **Streamlit:** İnteraktif web dashboard tasarımı için.
-* **Selenium & BeautifulSoup:** Dinamik web sayfalarından veri kazıma (Web Scraping) işlemleri için.
-* **SQLite & Pandas:** Hafif veritabanı yönetimi ve veri analizi/gösterimi için.
-* **`smtplib` / `email`:** E-posta bildirim altyapısı için.
-* **`schedule`:** Zaman tabanlı otomasyon görevleri için.
+Uygulamayı bilgisayarınızda sorunsuz çalıştırmak için terminalinizde aşağıdaki adımları sırasıyla uygulayın.
+
+### 1. Projeyi Bilgisayarınıza İndirin
+Öncelikle projeyi GitHub'dan klonlayın ve proje klasörünün içine girin:
+```bash
+git clone [https://github.com/KULLANICI_ADINIZ/amazon-price-tracker.git](https://github.com/KULLANICI_ADINIZ/amazon-price-tracker.git)
+cd amazon-price-tracker
+```
+
+### 2. Sanal Ortam (Virtual Environment) Kurulumu
+Kütüphanelerin bilgisayarınızdaki diğer projelerle çakışmaması için izole bir ortam oluşturun (macOS / Linux uyumlu):
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Gerekli Kütüphanelerin Yüklenmesi
+Sanal ortamınız aktifken (terminalde `(venv)` yazar), uygulamanın ihtiyaç duyduğu tüm paketleri kurun:
+```bash
+pip install streamlit selenium webdriver-manager beautifulsoup4 pandas schedule requests
+```
+
+### 4. E-Posta Bildirim Ayarları
+İndirim olduğunda botun size mail atabilmesi için `check_prices.py` dosyasını açın ve ilgili kısımları doldurun:
+```python
+EMAIL_ADRESIM = "senin.mailin@gmail.com"
+EMAIL_SIFREM = "16_haneli_uygulama_sifreniz" 
+```
+> **⚠️ Güvenlik Notu:** Kendi kişisel Gmail şifrenizi **kullanmayın**. Google Hesabı ayarlarınızdan (Güvenlik > 2 Adımlı Doğrulama > Uygulama Şifreleri) bu bota özel 16 haneli bir "Uygulama Şifresi" oluşturup buraya yapıştırın.
 
 ---
 
-## 📂 Proje Dosya Mimarisi
+## 💻 Uygulamayı Kullanma (Çift Terminal Sistemi)
+
+Uygulamanın arayüzü ve arka plan botu eşzamanlı çalışır. Bunun için proje klasöründe **iki ayrı terminal sekmesi** açın ve ikisinde de `source venv/bin/activate` komutuyla sanal ortamı aktif edin.
+
+### 1️⃣ Web Arayüzünü Başlatma
+Birinci terminalde aşağıdaki komutu çalıştırarak Streamlit panelini başlatın:
+```bash
+streamlit run app.py
+```
+Tarayıcınızda açılan ekrandan takip etmek istediğiniz Amazon ürününün linkini ve beklediğiniz fiyatı kaydedin.
+
+### 2️⃣ Otomasyon Botunu Başlatma
+İkinci terminalde fiyat denetleme ve mail atma botunu başlatın:
+```bash
+python3 check_prices.py
+```
+Bu terminal açık kaldığı sürece sistem belirlediğiniz aralıklarla Amazon'u kontrol edecek ve fiyat hedefinize ulaştığında size anında e-posta gönderecektir.
+
+---
+
+## ✨ Projenin Temel Özellikleri
+
+* **Kullanıcı Dostu Web Paneli:** Streamlit ile modern ve sade dashboard.
+* **Gelişmiş Web Scraping:** Selenium ve BeautifulSoup ile Amazon bot korumalarını aşan güçlü veri çekme altyapısı.
+* **Yerel Veritabanı (SQLite):** Takip edilen tüm ürünlerin, linklerin ve fiyat verilerinin güvenle saklanması.
+* **Zamanlanmış Görevler:** `schedule` kütüphanesi ile insan müdahalesine gerek duymayan otomasyon döngüsü.
+
+## 📂 Proje Mimarisi
 
 ```text
 📦 amazon-price-tracker
- ┣ 📜 app.py               # Streamlit web arayüzü ve kullanıcı paneli
- ┣ 📜 scraper.py           # Selenium ve BeautifulSoup tabanlı Amazon veri kazıma modülü
- ┣ 📜 database.py          # SQLite veritabanı bağlantı ve yönetim fonksiyonları
- ┣ 📜 check_prices.py      # Fiyatları periyodik kontrol eden ve e-posta atan otomasyon botu
- ┣ 📜 tracker.db           # SQLite veritabanı dosyası (Otomatik oluşur)
+ ┣ 📜 app.py               # Web arayüzünü başlatan ana dosya
+ ┣ 📜 scraper.py           # Selenium tabanlı veri çekme motoru
+ ┣ 📜 database.py          # SQLite veritabanı operasyonları
+ ┣ 📜 check_prices.py      # Arka planda çalışan bildirim botu
+ ┣ 📜 tracker.db           # Ürünlerin tutulduğu veritabanı (Otomatik oluşur)
  ┗ 📜 README.md            # Proje dokümantasyonu
+```
