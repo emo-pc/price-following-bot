@@ -5,79 +5,80 @@
 ![Selenium](https://img.shields.io/badge/Selenium-Scraping-43B02A.svg)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-003B57.svg)
 
-Bu proje; Amazon üzerindeki ürünlerin güncel fiyatlarını otomatik olarak takip eden, kullanıcı dostu bir web arayüzüne sahip ve belirlenen hedef fiyata ulaşıldığında anında e-posta ile bildirim gönderen **uçtan uca (end-to-end) bir web scraping ve otomasyon** uygulamasıdır.
+This project is an end-to-end web scraping and automation application that automatically tracks the current prices of products on Amazon. It features a user-friendly web dashboard and sends instant email notifications when a product reaches your desired target price.
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma Rehberi (Adım Adım)
+## 🚀 Step-by-Step Installation & Execution Guide
 
-Uygulamayı bilgisayarınızda sorunsuz çalıştırmak için terminalinizde aşağıdaki adımları sırasıyla uygulayın.
+Follow the steps below to run the application smoothly on your local machine.
 
-### 1. Projeyi Bilgisayarınıza İndirin
-Öncelikle projeyi GitHub'dan klonlayın ve proje klasörünün içine girin:
+### 1. Clone the Repository
+First, clone the project from GitHub and navigate into the project directory:
 ```bash
-git clone [https://github.com/KULLANICI_ADINIZ/amazon-price-tracker.git](https://github.com/KULLANICI_ADINIZ/amazon-price-tracker.git)
+git clone [https://github.com/YOUR_USERNAME/amazon-price-tracker.git](https://github.com/YOUR_USERNAME/amazon-price-tracker.git)
 cd amazon-price-tracker
 ```
 
-### 2. Sanal Ortam (Virtual Environment) Kurulumu
-Kütüphanelerin bilgisayarınızdaki diğer projelerle çakışmaması için izole bir ortam oluşturun (macOS / Linux uyumlu):
+### 2. Set Up a Virtual Environment
+To prevent library conflicts with other projects on your computer, create an isolated virtual environment (macOS / Linux):
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
+*(Windows users should use `venv\Scripts\activate` to activate the environment.)*
 
-### 3. Gerekli Kütüphanelerin Yüklenmesi
-Sanal ortamınız aktifken (terminalde `(venv)` yazar), uygulamanın ihtiyaç duyduğu tüm paketleri kurun:
+### 3. Install Required Libraries
+While your virtual environment is active (you should see `(venv)` in the terminal prompt), install all necessary dependencies:
 ```bash
 pip install streamlit selenium webdriver-manager beautifulsoup4 pandas schedule requests
 ```
 
-### 4. E-Posta Bildirim Ayarları
-İndirim olduğunda botun size mail atabilmesi için `check_prices.py` dosyasını açın ve ilgili kısımları doldurun:
+### 4. Email Notification Settings
+To allow the bot to send you emails when a price drops, open the `check_prices.py` file and update the following variables:
 ```python
-EMAIL_ADRESIM = "senin.mailin@gmail.com"
-EMAIL_SIFREM = "16_haneli_uygulama_sifreniz" 
+EMAIL_ADRESIM = "your.email@gmail.com"
+EMAIL_SIFREM = "your_16_digit_app_password" 
 ```
-> **⚠️ Güvenlik Notu:** Kendi kişisel Gmail şifrenizi **kullanmayın**. Google Hesabı ayarlarınızdan (Güvenlik > 2 Adımlı Doğrulama > Uygulama Şifreleri) bu bota özel 16 haneli bir "Uygulama Şifresi" oluşturup buraya yapıştırın.
+> **⚠️ Security Note:** Do **not** use your personal Gmail password. Go to your Google Account settings (Security > 2-Step Verification > App Passwords), generate a specific 16-digit "App Password" for this bot, and paste it here.
 
 ---
 
-## 💻 Uygulamayı Kullanma (Çift Terminal Sistemi)
+## 💻 Usage (Dual Terminal System)
 
-Uygulamanın arayüzü ve arka plan botu eşzamanlı çalışır. Bunun için proje klasöründe **iki ayrı terminal sekmesi** açın ve ikisinde de `source venv/bin/activate` komutuyla sanal ortamı aktif edin.
+The web interface and the background checking bot run simultaneously. To run both, open **two separate terminal tabs** in your project folder and activate the virtual environment (`source venv/bin/activate`) in both.
 
-### 1️⃣ Web Arayüzünü Başlatma
-Birinci terminalde aşağıdaki komutu çalıştırarak Streamlit panelini başlatın:
+### 1️⃣ Starting the Web Interface
+In the first terminal, run the following command to launch the Streamlit dashboard:
 ```bash
 streamlit run app.py
 ```
-Tarayıcınızda açılan ekrandan takip etmek istediğiniz Amazon ürününün linkini ve beklediğiniz fiyatı kaydedin.
+A browser window will automatically open. From there, you can add the Amazon product URL and set your target price.
 
-### 2️⃣ Otomasyon Botunu Başlatma
-İkinci terminalde fiyat denetleme ve mail atma botunu başlatın:
+### 2️⃣ Starting the Automation Bot
+In the second terminal, start the background bot that monitors prices and sends emails:
 ```bash
 python3 check_prices.py
 ```
-Bu terminal açık kaldığı sürece sistem belirlediğiniz aralıklarla Amazon'u kontrol edecek ve fiyat hedefinize ulaştığında size anında e-posta gönderecektir.
+As long as this terminal remains open, the system will periodically check Amazon and immediately email you when your price target is reached.
 
 ---
 
-## ✨ Projenin Temel Özellikleri
+## ✨ Core Features
 
-* **Kullanıcı Dostu Web Paneli:** Streamlit ile modern ve sade dashboard.
-* **Gelişmiş Web Scraping:** Selenium ve BeautifulSoup ile Amazon bot korumalarını aşan güçlü veri çekme altyapısı.
-* **Yerel Veritabanı (SQLite):** Takip edilen tüm ürünlerin, linklerin ve fiyat verilerinin güvenle saklanması.
-* **Zamanlanmış Görevler:** `schedule` kütüphanesi ile insan müdahalesine gerek duymayan otomasyon döngüsü.
+* **User-Friendly Web Panel:** A modern, minimal dashboard built with Streamlit.
+* **Advanced Web Scraping:** A robust scraping engine using Selenium and BeautifulSoup to bypass standard bot protections.
+* **Local Database (SQLite):** Securely stores all tracked products, URLs, and price data.
+* **Scheduled Tasks:** Utilizes the `schedule` library for a completely automated loop without human intervention.
 
-## 📂 Proje Mimarisi
+## 📂 Project Architecture
 
 ```text
 📦 amazon-price-tracker
- ┣ 📜 app.py               # Web arayüzünü başlatan ana dosya
- ┣ 📜 scraper.py           # Selenium tabanlı veri çekme motoru
- ┣ 📜 database.py          # SQLite veritabanı operasyonları
- ┣ 📜 check_prices.py      # Arka planda çalışan bildirim botu
- ┣ 📜 tracker.db           # Ürünlerin tutulduğu veritabanı (Otomatik oluşur)
- ┗ 📜 README.md            # Proje dokümantasyonu
+ ┣ 📜 app.py               # Main file to launch the web interface
+ ┣ 📜 scraper.py           # Selenium-based web scraping engine
+ ┣ 📜 database.py          # SQLite database operations
+ ┣ 📜 check_prices.py      # Background bot for price checking & alerts
+ ┣ 📜 tracker.db           # Database file for stored products (Auto-generated)
+ ┗ 📜 README.md            # Project documentation
 ```
